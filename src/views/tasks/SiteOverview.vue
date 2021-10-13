@@ -51,11 +51,13 @@
       >
         <div class="w-full bg-white border text-blue-400 rounded-lg flex items-center p-6 mb-6">
           <img class="icon" src="@/assets/people.svg" v-if="key === 'clients'" />
-          <img class="icon" src="@/assets/download.svg" v-if="key === 'rxGigabytes'" />
-          <img class="icon" src="@/assets/upload.svg" v-if="key === 'txGigabytes'" />
+          <img class="icon" src="@/assets/upload.svg" v-if="key === 'rxGigabytes'" />
+          <img class="icon" src="@/assets/download.svg" v-if="key === 'txGigabytes'" />
           <div class="text-gray-700">
             <p class="font-semibold text-3xl">{{ aggregatedMessage }}</p>
-            <p>{{ key }}</p>
+            <p v-if="key === 'rxGigabytes'">Upload</p>
+            <p v-else-if="key === 'txGigabytes'">Download</p>
+            <p v-else>{{ key }}</p>
           </div>
         </div>
       </div>
@@ -154,6 +156,8 @@ interface AggregratedMessageProps {
 
       aggregatedMessages.rxGigabytes /= 1000000000;
       aggregatedMessages.txGigabytes /= 1000000000;
+      aggregatedMessages.rxGigabytes = Number(aggregatedMessages.rxGigabytes.toFixed(2));
+      aggregatedMessages.txGigabytes = Number(aggregatedMessages.txGigabytes.toFixed(2));
       return aggregatedMessages;
     },
   },
